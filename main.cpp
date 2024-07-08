@@ -96,6 +96,8 @@ int main()
 
         // render the triangle
         ourShader.use();
+        float time = glfwGetTime();
+        ourShader.setFloat("colOffset", sin(time));
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
