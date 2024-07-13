@@ -2,6 +2,8 @@
 ---
 A personal repository to store changes between different tutorial chapters following the tutorials.
 
+**Currently**: You can move around in the world using W,A,S,D
+
 ---
 ## Build the code in this Repo
 ---
