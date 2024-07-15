@@ -26,6 +26,7 @@ const unsigned int SCR_HEIGHT = 600;
 
 // camera
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+
 float lastX = (float)SCR_WIDTH / 2;
 float lastY = (float)SCR_HEIGHT / 2;
 bool firstMouse = true;
@@ -36,6 +37,7 @@ float lastFrame = 0.0f;
 
 int main()
 {
+    // camera.setFPSCam();
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();

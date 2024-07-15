@@ -36,6 +36,9 @@ public:
   float MovementSpeed;
   float MouseSensitivity;
   float Zoom;
+
+  // fps cam option
+  float FPSCam;
   // constructor with vectors
   Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
   {
@@ -43,6 +46,7 @@ public:
     WorldUp = up;
     Yaw = yaw;
     Pitch = pitch;
+    FPSCam = false;
     updateCameraVectors();
   }
   // constructor with scalars
@@ -71,6 +75,9 @@ public:
       Position -= Right * velocity;
     if (direction == RIGHT)
       Position += Right * velocity;
+    // fps cam
+    if (FPSCam)
+      Position.y = 0.0f;
   }
   // process mouse
   void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
@@ -98,6 +105,10 @@ public:
       Zoom = 1.0f;
     if (Zoom > 45.0f)
       Zoom = 45.0f;
+  }
+  void setFPSCam()
+  {
+    FPSCam = true;
   }
 
 private:
