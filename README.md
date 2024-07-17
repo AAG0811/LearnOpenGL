@@ -1,9 +1,14 @@
 # Code Following **[LearnOpenGL](https://learnopengl.com)**
 ---
 A personal repository to store changes between different tutorial chapters following the tutorials.
-
+![Wooden and Steel box with demonic symbol](/ss/demonbox-ss.png)
 **Currently**: You can move around in the world using W,A,S,D
-
+Space to fly up
+Shift to fly down
+Q to quit
+Escape to show cursor
+Mouse to look around
+Scroll to Zoom
 ---
 ## Build the code in this Repo
 ---
