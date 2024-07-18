@@ -10,6 +10,9 @@
 #include "include/glm/gtc/matrix_transform.hpp"
 #include "include/glm/gtc/type_ptr.hpp"
 
+#define NK_IMPLEMENTATION
+#include "nuklear.h"
+
 #include "camera.h"
 #include "shader.h"
 
