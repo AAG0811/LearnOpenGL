@@ -81,9 +81,9 @@ int main()
     // build and compile our shader program
     // ------------------------------------
     Shader lightingShader(
-        "../vertShader.vs",
-        "../fragShader.fs"); // you can name your shader files however you like
-    Shader lightCubeShader("../vertShader.vs", "../light_cube.fs");
+        "../shaders/vertShader.vs",
+        "../shaders/fragShader.fs"); // you can name your shader files however you like
+    Shader lightCubeShader("../shaders/vertShader.vs", "../shaders/light_cube.fs");
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------
     float vertices[] = {
@@ -177,9 +177,9 @@ int main()
     glEnableVertexAttribArray(0);
 
     // textures would go here
-    unsigned int diffuseMap = loadTexture("../steelbox.png");
-    unsigned int specularMap = loadTexture("../steelbox_specular.png");
-    unsigned int emmisionMap = loadTexture("../demon_emmision.png");
+    unsigned int diffuseMap = loadTexture("../assets/steelbox.png");
+    unsigned int specularMap = loadTexture("../assets/steelbox_specular.png");
+    unsigned int emmisionMap = loadTexture("../assets/demon_emmision.png");
 
     lightingShader.use();
     lightingShader.setInt("material.diffuse", 0);
