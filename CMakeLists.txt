@@ -4,7 +4,7 @@ project(learnGL)
 
 find_package(glfw3 3.4 REQUIRED)
 
-set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h)
+set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h nuklear.h)
 
 file(GLOB IMGUI_SRC ${CMAKE_SOURCE_DIR}/include/imgui/*.cpp ${CMAKE_SOURCE_DIR}/include/imgui/*.h)
 
