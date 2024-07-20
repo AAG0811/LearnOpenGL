@@ -6,7 +6,7 @@ project(app)
 
 find_package(glfw3 3.4 REQUIRED)
 find_package(ZLIB)
-find_library(ASSIMP_LIB libassimp.a ${CMAKE_SOURCE_DIR}/lib)
+find_library(ASSIMP_LIB libassimp.5.4.1.dylib ${CMAKE_SOURCE_DIR}/lib)
 set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h mesh.h model.h)
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
