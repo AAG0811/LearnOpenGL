@@ -50,8 +50,8 @@ void main()
     result += CalcPointLight(pointLight, norm, FragPos, viewDir);
 
     // emmision
-    // vec3 emmision = texture(material.emmision, TexCoords).rgb;
-    // result += emmision;
+    vec3 emmision = texture(material.emmision, TexCoords).rgb;
+    result += emmision;
 
     FragColor = vec4(result, 1.0);
 } 
