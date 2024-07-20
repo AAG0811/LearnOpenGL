@@ -9,11 +9,7 @@ project(app)
 
 find_package(glfw3 3.4 REQUIRED)
 find_package(ZLIB)
-if (MACOS_BUILD)
-  find_library(ASSIMP_LIB libassimp.a ${CMAKE_SOURCE_DIR}/external-lib/assimp/macos)
-if (LINUX_BUILD) # set assimp.a to be linux version
-  find_library(ASSIMP_LIB libassimp.a ${CMAKE_SOURCE_DIR}/external-lib/assimp/linux)
-  
+find_library(ASSIMP_LIB libassimp.5.4.1.dylib ${CMAKE_SOURCE_DIR}/lib)
 set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h mesh.h model.h)
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
