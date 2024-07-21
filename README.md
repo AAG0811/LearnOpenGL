@@ -9,9 +9,11 @@ Q to quit
 Escape to show cursor
 Mouse to look around
 Scroll to Zoom
+## Dependencies
+> GLFW
+
 ---
 ## Build the code in this Repo
----
 1. Create a directory with any name - e.g. '*build*' and navigate to that folder in the Terminal.
 2. Using **CMake** generate the build-files in the folder you just created by running the command:
   > `cmake ..`
