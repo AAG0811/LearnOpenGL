@@ -43,6 +43,7 @@ int main() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+  glfwWindowHint(GLFW_SAMPLES, 4);
 
 #ifdef __APPLE__
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -74,11 +75,13 @@ int main() {
   stbi_set_flip_vertically_on_load(true);
 
   glEnable(GL_DEPTH_TEST);
+  glEnable(GL_MULTISAMPLE);
   // build and compile our shader program
   // ------------------------------------
   Shader modelShader("../shaders/textureShader.vs", "../shaders/textureShader.fs");
   // load models
   // -------------------
+  // change model here
   Model ourModel("../assets/models/backpack/backpack.obj");
 
   // draw wireframe
