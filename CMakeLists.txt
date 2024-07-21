@@ -2,14 +2,11 @@ cmake_minimum_required(VERSION 3.20.0)
 set(CMAKE_CXX_STANDARD 11)
 # set(CMAKE_VERBOSE_MAKEFILE ON)
 
-option(MACOS_BUILD "Link to macos compiled assimp" ON)
-option(LINUX_BUILD "Link to linux compiled assimp" OFF)
-
 project(app)
 
 find_package(glfw3 3.4 REQUIRED)
 find_package(ZLIB)
-find_library(ASSIMP_LIB libassimp.5.4.1.dylib ${CMAKE_SOURCE_DIR}/lib)
+find_library(ASSIMP_LIB libassimp.5.dylib ${CMAKE_SOURCE_DIR}/lib/assimp)
 set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h mesh.h model.h)
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
