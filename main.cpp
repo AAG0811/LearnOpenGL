@@ -72,7 +72,7 @@ int main() {
     return -1;
   }
 
-  stbi_set_flip_vertically_on_load(true);
+  // stbi_set_flip_vertically_on_load(true);
 
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_MULTISAMPLE);
@@ -82,7 +82,7 @@ int main() {
   // load models
   // -------------------
   // change model here
-  Model ourModel("../assets/models/backpack/backpack.obj");
+  Model ourModel("../assets/models/pistol/pistol.obj");
 
   // draw wireframe
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
