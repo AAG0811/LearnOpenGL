@@ -23,7 +23,8 @@ if(Apple)
 endif()
 
 set(SOURCES main.cpp glad.c shader.h camera.h stb_image.h mesh.h model.h)
-add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
+file(GLOB IMGUI_SOURCE ${CMAKE_SOURCE_DIR}/include/imgui/*.cpp ${CMAKE_SOURCE_DIR}/include/imgui/*.h)
+add_executable(${CMAKE_PROJECT_NAME} ${SOURCES} ${IMGUI_SOURCE})
 
 target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
 target_link_directories(${CMAKE_PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/lib)
