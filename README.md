@@ -1,14 +1,19 @@
 # Code Following **[LearnOpenGL](https://learnopengl.com)**
 ---
 A personal repository to store changes between different tutorial chapters following the tutorials.
-![Wooden and Steel box with demonic symbol](/assets/ss/demonbox-ss.png)
+![Wooden and Steel box with demonic symbol](/assets/ss/engine-ss.png)
 **Currently**: You can move around in the world using W,A,S,D
 Space to fly up
 Shift to fly down
 Q to quit
 Escape to show cursor
+Tab to hide the cursor
 Mouse to look around
 Scroll to Zoom
+Use Settings Panel to configure lighting
+
+Add models to the assets/models folder and replace 'pistol' with your model name in the following line in the main.cpp file (approximately line 119)
+``` Model ourModel("../assets/models/pistol/pistol.obj"); ```
 ## Dependencies
 > GLFW
 > Zlib

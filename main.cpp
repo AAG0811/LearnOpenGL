@@ -176,7 +176,7 @@ int main() {
         ourModel.Draw(modelShader);
         // render loaded model
         glm::mat4 modelb = glm::mat4(1.0f);
-        modelb = glm::translate(modelb, glm::vec3(0.0f, 0.0f, -10.0f));
+        modelb = glm::translate(modelb, glm::vec3(0.0f, 0.0f, -5.0f));
         modelb = glm::scale(modelb, glm::vec3(1.0f, 1.0f, 1.0f));
         modelShader.setMat4("model", modelb);
         bModel.Draw(modelShader);
@@ -207,9 +207,10 @@ int main() {
           ImGui::SliderFloat("Point Quadratic", (float *)&pointLightQuadratic, 0, 5, "%.4f");
           ImGui::Text("Material Settings");
           ImGui::SliderFloat("Material Shininess", (float *)&materialShininess, 0, 100, "%.2f");
+          if(ImGui::Button("Close Program"))
+            glfwSetWindowShouldClose(window, true);
           ImGui::End();
         }
-
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -236,6 +237,7 @@ void processInput(GLFWwindow *window) {
     mouseEnabled = false;
   }
   if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS) {
+    firstMouse = true;
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     mouseEnabled = true;
     }
