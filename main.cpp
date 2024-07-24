@@ -190,6 +190,9 @@ int main() {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        // set window size and pos
+        ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
+        ImGui::SetNextWindowSize(ImVec2((float)(SCR_WIDTH * 0.45), (float)(SCR_WIDTH * 0.45)));
         { // IMGUI Scene Window
           ImGui::Begin("Scene Settings", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
           ImGui::Text("Directional Light Settings");
