@@ -82,7 +82,8 @@ int main() {
 
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_MULTISAMPLE);
-  
+  glEnable(GL_CULL_FACE);
+
   // setup dearimgui
     // -----------------------------
     IMGUI_CHECKVERSION();
@@ -138,7 +139,7 @@ int main() {
         // ------
         glClearColor(0.1f, 0.10f, 0.10f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+        glCullFace(GL_BACK);
         // be sure to activate shader when setting uniforms/drawing objects
         modelShader.use();
 
