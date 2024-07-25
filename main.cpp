@@ -98,17 +98,19 @@ int main() {
   // skybox setup
   vector<std::string> faces
   {
-      "../assests/skybox/right.jpg",
-      "../assests/skybox/left.jpg",
-      "../assests/skybox/top.jpg",
-      "../assests/skybox/bottom.jpg",
-      "../assests/skybox/front.jpg",
-      "../assests/skybox/back.jpg",
+      "../assets/skybox/right.jpg",
+      "../assets/skybox/left.jpg",
+      "../assets/skybox/top.jpg",
+      "../assets/skybox/bottom.jpg",
+      "../assets/skybox/front.jpg",
+      "../assets/skybox/back.jpg",
   };
   unsigned int cubemapTexture = loadCubeMap(faces);
   // build and compile our shader program
   // ------------------------------------
+  // create skybox shader and render
   Shader modelShader("../shaders/vertShader.vs", "../shaders/fragShader.fs");
+  
   // shader variables
     glm::vec3 dirLightDirection(-0.2f, -1.0f, -0.3f);
     glm::vec3 dirLightAmbient(0.5f, 0.5f, 0.5f);
