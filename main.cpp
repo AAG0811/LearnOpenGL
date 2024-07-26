@@ -223,13 +223,6 @@ int main() {
       modelShader.use();
       modelShader.setMat4("projection", projection);
       modelShader.setMat4("view", view);
-
-      // set skybox
-      glBindVertexArray(skyboxVAO);
-      glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-      glDrawArrays(GL_TRIANGLES, 0, 36);
-      glDepthMask(GL_TRUE);
-
       // light properties
       // directional light
       modelShader.setVec3("dirLight.direction", dirLightDirection);
