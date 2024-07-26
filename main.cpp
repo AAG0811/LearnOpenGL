@@ -83,7 +83,7 @@ int main() {
 
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_MULTISAMPLE);
-  glEnable(GL_CULL_FACE);
+  // glEnable(GL_CULL_FACE);
 
   // setup dearimgui
   // -----------------------------
@@ -120,8 +120,52 @@ int main() {
       // load models
       // -------------------
       // change model here
-      Model ourModel("../assets/models/pistol/pistol.obj");
-      Model bModel("../assets/models/sword/sword.obj");
+      // Model ourModel("../assets/models/pistol/pistol.obj");
+      // Model bModel("../assets/models/sword/sword.obj");
+      float cubeVertices[] = {
+        // positions          // normals
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+    };
       // skybox
     float skyboxVertices[] = {
     // positions          
@@ -167,6 +211,18 @@ int main() {
     -1.0f, -1.0f,  1.0f,
      1.0f, -1.0f,  1.0f
     };
+    //cube vao
+    // cube VAO
+    unsigned int cubeVAO, cubeVBO;
+    glGenVertexArrays(1, &cubeVAO);
+    glGenBuffers(1, &cubeVBO);
+    glBindVertexArray(cubeVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     // skybox VAO
     unsigned int skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -190,6 +246,9 @@ int main() {
 
     // shader configuration
     // --------------------
+    modelShader.use();
+    modelShader.setInt("skybox", 0);
+
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
     
@@ -223,36 +282,46 @@ int main() {
       modelShader.use();
       modelShader.setMat4("projection", projection);
       modelShader.setMat4("view", view);
+      glm::mat4 model = glm::mat4(1.0f);
+      modelShader.setMat4("model", model);
+      modelShader.setVec3("cameraPos", camera.Position);
+      // draw
+      glBindVertexArray(cubeVAO);
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+      glDrawArrays(GL_TRIANGLES, 0, 36);
+      glBindVertexArray(0);
+
       // light properties
       // directional light
-      modelShader.setVec3("dirLight.direction", dirLightDirection);
-      modelShader.setVec3("dirLight.ambient", dirLightAmbient);
-      modelShader.setVec3("dirLight.diffuse", dirLightDiffuse);
-      modelShader.setVec3("dirLight.specular", dirLightSpecular);
-      // point light 1
-      modelShader.setVec3("pointLight.position", pointLightPosition);
-      modelShader.setVec3("pointLight.ambient", pointLightAmbient);
-      modelShader.setVec3("pointLight.diffuse", pointLightDiffuse);
-      modelShader.setVec3("pointLight.specular", pointLightSpecular);
-      modelShader.setFloat("pointLight.constant", pointLightConstant);
-      modelShader.setFloat("pointLight.linear", pointLightLinear);
-      modelShader.setFloat("pointLight.quadratic", pointLightQuadratic);
-      // material properties
-      modelShader.setFloat("material.shininess", materialShininess);
+      // modelShader.setVec3("dirLight.direction", dirLightDirection);
+      // modelShader.setVec3("dirLight.ambient", dirLightAmbient);
+      // modelShader.setVec3("dirLight.diffuse", dirLightDiffuse);
+      // modelShader.setVec3("dirLight.specular", dirLightSpecular);
+      // // point light 1
+      // modelShader.setVec3("pointLight.position", pointLightPosition);
+      // modelShader.setVec3("pointLight.ambient", pointLightAmbient);
+      // modelShader.setVec3("pointLight.diffuse", pointLightDiffuse);
+      // modelShader.setVec3("pointLight.specular", pointLightSpecular);
+      // modelShader.setFloat("pointLight.constant", pointLightConstant);
+      // modelShader.setFloat("pointLight.linear", pointLightLinear);
+      // modelShader.setFloat("pointLight.quadratic", pointLightQuadratic);
+      // // material properties
+      // modelShader.setFloat("material.shininess", materialShininess);
 
-      // render loaded model
-      glm::mat4 model = glm::mat4(1.0f);
-      model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
-      model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-      model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-      modelShader.setMat4("model", model);
-      ourModel.Draw(modelShader);
-      // render loaded model
-      glm::mat4 modelb = glm::mat4(1.0f);
-      modelb = glm::translate(modelb, glm::vec3(0.0f, 0.0f, -5.0f));
-      modelb = glm::scale(modelb, glm::vec3(1.0f, 1.0f, 1.0f));
-      modelShader.setMat4("model", modelb);
-      bModel.Draw(modelShader);
+      // // render loaded model
+      // glm::mat4 model = glm::mat4(1.0f);
+      // model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
+      // model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+      // model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+      // modelShader.setMat4("model", model);
+      // ourModel.Draw(modelShader);
+      // // render loaded model
+      // glm::mat4 modelb = glm::mat4(1.0f);
+      // modelb = glm::translate(modelb, glm::vec3(0.0f, 0.0f, -5.0f));
+      // modelb = glm::scale(modelb, glm::vec3(1.0f, 1.0f, 1.0f));
+      // modelShader.setMat4("model", modelb);
+      // bModel.Draw(modelShader);
 
       // draw skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
