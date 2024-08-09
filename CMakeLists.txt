@@ -13,6 +13,9 @@ endif()
 
 project(app)
 
+if(WIN32)
+set(glfw3_DIR C:/dev/c++-libs/glfw-build/src)
+endif()
 find_package(glfw3 3.4 REQUIRED)
 find_package(ZLIB)
 if(Linux)
