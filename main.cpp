@@ -42,7 +42,8 @@ glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 bool mouseEnabled = true;
 
-int main() {
+int main()
+{
   // camera.setFPSCam();
   // glfw: initialize and configure
   // ------------------------------
@@ -60,7 +61,8 @@ int main() {
   // --------------------
   GLFWwindow *window =
       glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-  if (window == NULL) {
+  if (window == NULL)
+  {
     std::cout << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
     return -1;
@@ -74,7 +76,8 @@ int main() {
 
   // glad: load all OpenGL function pointers
   // ---------------------------------------
-  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+  {
     std::cout << "Failed to initialize GLAD" << std::endl;
     return -1;
   }
@@ -102,210 +105,200 @@ int main() {
   Shader modelShader("../shaders/vertShader.vs", "../shaders/fragShader.fs");
 
   // shader variables
-    glm::vec3 dirLightDirection(-0.2f, -1.0f, -0.3f);
-    glm::vec3 dirLightAmbient(0.5f, 0.5f, 0.5f);
-    glm::vec3 dirLightDiffuse(0.8f, 0.8f, 0.8f);
-    glm::vec3 dirLightSpecular(0.5f, 0.5f, 0.5f);
+  glm::vec3 dirLightDirection(-0.2f, -1.0f, -0.3f);
+  glm::vec3 dirLightAmbient(0.5f, 0.5f, 0.5f);
+  glm::vec3 dirLightDiffuse(0.8f, 0.8f, 0.8f);
+  glm::vec3 dirLightSpecular(0.5f, 0.5f, 0.5f);
 
-    glm::vec3 pointLightPosition(0.0f, 2.0f, 2.0f);
-    glm::vec3 pointLightAmbient(0.05f, 0.05f, 0.05f);
-    glm::vec3 pointLightDiffuse(01.8f, 01.8f, 010.8f);
-    glm::vec3 pointLightSpecular(1.0f, 1.0f, 1.0f);
-    float pointLightConstant = 1.0f;
-    float pointLightLinear = 0.09f;
-    float pointLightQuadratic = 0.032f;
+  glm::vec3 pointLightPosition(0.0f, 2.0f, 2.0f);
+  glm::vec3 pointLightAmbient(0.05f, 0.05f, 0.05f);
+  glm::vec3 pointLightDiffuse(01.8f, 01.8f, 010.8f);
+  glm::vec3 pointLightSpecular(1.0f, 1.0f, 1.0f);
+  float pointLightConstant = 1.0f;
+  float pointLightLinear = 0.09f;
+  float pointLightQuadratic = 0.032f;
 
-    float materialShininess = 64.0f;
+  float materialShininess = 64.0f;
 
-      // load models
-      // -------------------
-      // change model here
-      Model ourModel("../assets/models/pistol/pistol.obj");
-      Model bModel("../assets/models/sword/sword.obj");
-      // skybox
-    float skyboxVertices[] = {
-    // positions          
-    -1.0f,  1.0f, -1.0f,
-    -1.0f, -1.0f, -1.0f,
-     1.0f, -1.0f, -1.0f,
-     1.0f, -1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
+  // load models
+  // -------------------
+  // change model here
+  Model ourModel("../assets/models/pistol/pistol.obj");
+  // plane to replace model
 
-    -1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f, -1.0f,
-    -1.0f,  1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
+  // skybox
+  float skyboxVertices[] = {
+      // positions
+      -1.0f, 1.0f, -1.0f,
+      -1.0f, -1.0f, -1.0f,
+      1.0f, -1.0f, -1.0f,
+      1.0f, -1.0f, -1.0f,
+      1.0f, 1.0f, -1.0f,
+      -1.0f, 1.0f, -1.0f,
 
-     1.0f, -1.0f, -1.0f,
-     1.0f, -1.0f,  1.0f,
-     1.0f,  1.0f,  1.0f,
-     1.0f,  1.0f,  1.0f,
-     1.0f,  1.0f, -1.0f,
-     1.0f, -1.0f, -1.0f,
+      -1.0f, -1.0f, 1.0f,
+      -1.0f, -1.0f, -1.0f,
+      -1.0f, 1.0f, -1.0f,
+      -1.0f, 1.0f, -1.0f,
+      -1.0f, 1.0f, 1.0f,
+      -1.0f, -1.0f, 1.0f,
 
-    -1.0f, -1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
-     1.0f,  1.0f,  1.0f,
-     1.0f,  1.0f,  1.0f,
-     1.0f, -1.0f,  1.0f,
-    -1.0f, -1.0f,  1.0f,
+      1.0f, -1.0f, -1.0f,
+      1.0f, -1.0f, 1.0f,
+      1.0f, 1.0f, 1.0f,
+      1.0f, 1.0f, 1.0f,
+      1.0f, 1.0f, -1.0f,
+      1.0f, -1.0f, -1.0f,
 
-    -1.0f,  1.0f, -1.0f,
-     1.0f,  1.0f, -1.0f,
-     1.0f,  1.0f,  1.0f,
-     1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f,  1.0f,
-    -1.0f,  1.0f, -1.0f,
+      -1.0f, -1.0f, 1.0f,
+      -1.0f, 1.0f, 1.0f,
+      1.0f, 1.0f, 1.0f,
+      1.0f, 1.0f, 1.0f,
+      1.0f, -1.0f, 1.0f,
+      -1.0f, -1.0f, 1.0f,
 
-    -1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f,
-     1.0f, -1.0f, -1.0f,
-     1.0f, -1.0f, -1.0f,
-    -1.0f, -1.0f,  1.0f,
-     1.0f, -1.0f,  1.0f
-    };
-    // skybox VAO
-    unsigned int skyboxVAO, skyboxVBO;
-    glGenVertexArrays(1, &skyboxVAO);
-    glGenBuffers(1, &skyboxVBO);
-    glBindVertexArray(skyboxVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    // load textures
-    vector<std::string> faces
-    {
-        "../assets/skybox/right.jpg",
-        "../assets/skybox/left.jpg",
-        "../assets/skybox/top.jpg",
-        "../assets/skybox/bottom.jpg",
-        "../assets/skybox/front.jpg",
-        "../assets/skybox/back.jpg"
-    };
-    unsigned int cubemapTexture = loadCubemap(faces);
+      -1.0f, 1.0f, -1.0f,
+      1.0f, 1.0f, -1.0f,
+      1.0f, 1.0f, 1.0f,
+      1.0f, 1.0f, 1.0f,
+      -1.0f, 1.0f, 1.0f,
+      -1.0f, 1.0f, -1.0f,
 
-    // shader configuration
-    // --------------------
+      -1.0f, -1.0f, -1.0f,
+      -1.0f, -1.0f, 1.0f,
+      1.0f, -1.0f, -1.0f,
+      1.0f, -1.0f, -1.0f,
+      -1.0f, -1.0f, 1.0f,
+      1.0f, -1.0f, 1.0f};
+  // skybox VAO
+  unsigned int skyboxVAO, skyboxVBO;
+  glGenVertexArrays(1, &skyboxVAO);
+  glGenBuffers(1, &skyboxVBO);
+  glBindVertexArray(skyboxVAO);
+  glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+  glEnableVertexAttribArray(0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+  // load textures
+  vector<std::string> faces{
+      "../assets/skybox/right.jpg",
+      "../assets/skybox/left.jpg",
+      "../assets/skybox/top.jpg",
+      "../assets/skybox/bottom.jpg",
+      "../assets/skybox/front.jpg",
+      "../assets/skybox/back.jpg"};
+  unsigned int cubemapTexture = loadCubemap(faces);
+
+  // shader configuration
+  // --------------------
+  skyboxShader.use();
+  skyboxShader.setInt("skybox", 0);
+
+  // draw wireframe
+  // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+  // render loop
+  // -----------
+  while (!glfwWindowShouldClose(window))
+  {
+    // delta time
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+    // input
+    // -----
+    processInput(window);
+
+    // render
+    // ------
+    glClearColor(0.1f, 0.10f, 0.10f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // glCullFace(GL_BACK);
+
+    // view/projection transformations
+    glm::mat4 projection =
+        glm::perspective(glm::radians(camera.Zoom),
+                         (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    glm::mat4 view = camera.GetViewMatrix();
+    // be sure to activate shader when setting uniforms/drawing objects
+    modelShader.use();
+    modelShader.setMat4("projection", projection);
+    modelShader.setMat4("view", view);
+    // light properties
+    // directional light
+    modelShader.setVec3("dirLight.direction", dirLightDirection);
+    modelShader.setVec3("dirLight.ambient", dirLightAmbient);
+    modelShader.setVec3("dirLight.diffuse", dirLightDiffuse);
+    modelShader.setVec3("dirLight.specular", dirLightSpecular);
+    // point light 1
+    modelShader.setVec3("pointLight.position", pointLightPosition);
+    modelShader.setVec3("pointLight.ambient", pointLightAmbient);
+    modelShader.setVec3("pointLight.diffuse", pointLightDiffuse);
+    modelShader.setVec3("pointLight.specular", pointLightSpecular);
+    modelShader.setFloat("pointLight.constant", pointLightConstant);
+    modelShader.setFloat("pointLight.linear", pointLightLinear);
+    modelShader.setFloat("pointLight.quadratic", pointLightQuadratic);
+    // material properties
+    modelShader.setFloat("material.shininess", materialShininess);
+
+    // render loaded model
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
+    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+    modelShader.setMat4("model", model);
+    ourModel.Draw(modelShader);
+    // draw skybox as last
+    glDepthFunc(GL_LEQUAL); // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader.use();
-    skyboxShader.setInt("skybox", 0);
-    
-    // draw wireframe
-    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
+    skyboxShader.setMat4("view", view);
+    skyboxShader.setMat4("projection", projection);
+    // skybox cube
+    glBindVertexArray(skyboxVAO);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+    glBindVertexArray(0);
+    glDepthFunc(GL_LESS); // set depth function back to default
 
-    // render loop
-    // -----------
-    while (!glfwWindowShouldClose(window))
-    {
-      // delta time
-      float currentFrame = glfwGetTime();
-      deltaTime = currentFrame - lastFrame;
-      lastFrame = currentFrame;
-      // input
-      // -----
-      processInput(window);
+    // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
+    // etc.)
+    // -------------------------------------------------------------------------------
+    glfwPollEvents();
 
-      // render
-      // ------
-      glClearColor(0.1f, 0.10f, 0.10f, 1.0f);
-      glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-      // glCullFace(GL_BACK);
+    // Start the Dear ImGui frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    // set window size and pos
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
+    ImGui::SetNextWindowSize(ImVec2((float)(SCR_WIDTH * 0.45), (float)(SCR_WIDTH * 0.45)));
+    { // IMGUI Scene Window
+      ImGui::Begin("Scene Settings", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
+      ImGui::Text("Directional Light Settings");
+      ImGui::SliderFloat3("Direction", (float *)&dirLightDirection, -10, 10, "%.3f");
+      ImGui::SliderFloat3("Directional Ambient", (float *)&dirLightAmbient, 0, 10, "%.3f");
+      ImGui::SliderFloat3("Directional Diffuse", (float *)&dirLightDiffuse, 0, 10, "%.3f");
+      ImGui::SliderFloat3("Directional Specular", (float *)&dirLightSpecular, 0, 10, "%.3f");
+      ImGui::Text("Point Light Settings");
+      ImGui::SliderFloat3("Point Position", (float *)&pointLightPosition, -10, 10, "%.3f");
+      ImGui::SliderFloat3("Point Ambient", (float *)&pointLightAmbient, 0, 10, "%.3f");
+      ImGui::SliderFloat3("Point Diffuse", (float *)&pointLightDiffuse, 0, 10, "%.3f");
+      ImGui::SliderFloat3("Point Specular", (float *)&pointLightSpecular, 0, 10, "%.3f");
+      ImGui::SliderFloat("Point Constant", (float *)&pointLightConstant, 0, 10, "%.3f");
+      ImGui::SliderFloat("LPoint inear", (float *)&pointLightLinear, 0, 5, "%.3f");
+      ImGui::SliderFloat("Point Quadratic", (float *)&pointLightQuadratic, 0, 5, "%.4f");
+      ImGui::Text("Material Settings");
+      ImGui::SliderFloat("Material Shininess", (float *)&materialShininess, 0, 100, "%.2f");
+      if (ImGui::Button("Close Program"))
+        glfwSetWindowShouldClose(window, true);
+      ImGui::End();
+    }
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-      // view/projection transformations
-      glm::mat4 projection =
-          glm::perspective(glm::radians(camera.Zoom),
-                           (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-      glm::mat4 view = camera.GetViewMatrix();
-      // be sure to activate shader when setting uniforms/drawing objects
-      modelShader.use();
-      modelShader.setMat4("projection", projection);
-      modelShader.setMat4("view", view);
-      // light properties
-      // directional light
-      modelShader.setVec3("dirLight.direction", dirLightDirection);
-      modelShader.setVec3("dirLight.ambient", dirLightAmbient);
-      modelShader.setVec3("dirLight.diffuse", dirLightDiffuse);
-      modelShader.setVec3("dirLight.specular", dirLightSpecular);
-      // point light 1
-      modelShader.setVec3("pointLight.position", pointLightPosition);
-      modelShader.setVec3("pointLight.ambient", pointLightAmbient);
-      modelShader.setVec3("pointLight.diffuse", pointLightDiffuse);
-      modelShader.setVec3("pointLight.specular", pointLightSpecular);
-      modelShader.setFloat("pointLight.constant", pointLightConstant);
-      modelShader.setFloat("pointLight.linear", pointLightLinear);
-      modelShader.setFloat("pointLight.quadratic", pointLightQuadratic);
-      // material properties
-      modelShader.setFloat("material.shininess", materialShininess);
-
-      // render loaded model
-      glm::mat4 model = glm::mat4(1.0f);
-      model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
-      model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-      model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
-      modelShader.setMat4("model", model);
-      ourModel.Draw(modelShader);
-      // render loaded model
-      glm::mat4 modelb = glm::mat4(1.0f);
-      modelb = glm::translate(modelb, glm::vec3(0.0f, 0.0f, -5.0f));
-      modelb = glm::scale(modelb, glm::vec3(1.0f, 1.0f, 1.0f));
-      modelShader.setMat4("model", modelb);
-      bModel.Draw(modelShader);
-
-      // draw skybox as last
-        glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-        skyboxShader.use();
-        view = glm::mat4(glm::mat3(camera.GetViewMatrix())); // remove translation from the view matrix
-        skyboxShader.setMat4("view", view);
-        skyboxShader.setMat4("projection", projection);
-        // skybox cube
-        glBindVertexArray(skyboxVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
-        glDepthFunc(GL_LESS); // set depth function back to default
-
-
-      // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved
-      // etc.)
-      // -------------------------------------------------------------------------------
-      glfwPollEvents();
-
-      // Start the Dear ImGui frame
-      ImGui_ImplOpenGL3_NewFrame();
-      ImGui_ImplGlfw_NewFrame();
-      ImGui::NewFrame();
-      // set window size and pos
-      ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-      ImGui::SetNextWindowSize(ImVec2((float)(SCR_WIDTH * 0.45), (float)(SCR_WIDTH * 0.45)));
-      { // IMGUI Scene Window
-        ImGui::Begin("Scene Settings", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-        ImGui::Text("Directional Light Settings");
-        ImGui::SliderFloat3("Direction", (float *)&dirLightDirection, -10, 10, "%.3f");
-        ImGui::SliderFloat3("Directional Ambient", (float *)&dirLightAmbient, 0, 10, "%.3f");
-        ImGui::SliderFloat3("Directional Diffuse", (float *)&dirLightDiffuse, 0, 10, "%.3f");
-        ImGui::SliderFloat3("Directional Specular", (float *)&dirLightSpecular, 0, 10, "%.3f");
-        ImGui::Text("Point Light Settings");
-        ImGui::SliderFloat3("Point Position", (float *)&pointLightPosition, -10, 10, "%.3f");
-        ImGui::SliderFloat3("Point Ambient", (float *)&pointLightAmbient, 0, 10, "%.3f");
-        ImGui::SliderFloat3("Point Diffuse", (float *)&pointLightDiffuse, 0, 10, "%.3f");
-        ImGui::SliderFloat3("Point Specular", (float *)&pointLightSpecular, 0, 10, "%.3f");
-        ImGui::SliderFloat("Point Constant", (float *)&pointLightConstant, 0, 10, "%.3f");
-        ImGui::SliderFloat("LPoint inear", (float *)&pointLightLinear, 0, 5, "%.3f");
-        ImGui::SliderFloat("Point Quadratic", (float *)&pointLightQuadratic, 0, 5, "%.4f");
-        ImGui::Text("Material Settings");
-        ImGui::SliderFloat("Material Shininess", (float *)&materialShininess, 0, 100, "%.2f");
-        if (ImGui::Button("Close Program"))
-          glfwSetWindowShouldClose(window, true);
-        ImGui::End();
-      }
-      ImGui::Render();
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-      glfwSwapBuffers(window);
+    glfwSwapBuffers(window);
   }
   // deallocate resources
   glDeleteVertexArrays(1, &skyboxVAO);
@@ -323,18 +316,21 @@ int main() {
 // process all input: query GLFW whether relevant keys are pressed/released this
 // frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow *window) {
+void processInput(GLFWwindow *window)
+{
   if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+  {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     mouseEnabled = false;
   }
-  if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS) {
+  if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
+  {
     firstMouse = true;
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     mouseEnabled = true;
-    }
+  }
 
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     camera.ProcessKeyboard(FORWARD, deltaTime);
@@ -353,60 +349,65 @@ void processInput(GLFWwindow *window) {
 // glfw: whenever the window size changed (by OS or user resize) this callback
 // function executes
 // ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
+void framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
   // make sure the viewport matches the new window dimensions; note that width
   // and height will be significantly larger than specified on retina displays.
   glViewport(0, 0, width, height);
 }
 
-void mouse_callback(GLFWwindow *window, double xposIn, double yposIn) {
-  if (mouseEnabled) {
-  float xpos = static_cast<float>(xposIn);
-  float ypos = static_cast<float>(yposIn);
-  if (firstMouse) {
+void mouse_callback(GLFWwindow *window, double xposIn, double yposIn)
+{
+  if (mouseEnabled)
+  {
+    float xpos = static_cast<float>(xposIn);
+    float ypos = static_cast<float>(yposIn);
+    if (firstMouse)
+    {
+      lastX = xpos;
+      lastY = ypos;
+      firstMouse = false;
+    }
+
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
     lastX = xpos;
     lastY = ypos;
-    firstMouse = false;
-  }
 
-  float xoffset = xpos - lastX;
-  float yoffset = lastY - ypos;
-  lastX = xpos;
-  lastY = ypos;
-
-  camera.ProcessMouseMovement(xoffset, yoffset);
+    camera.ProcessMouseMovement(xoffset, yoffset);
   }
 }
 
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffest) {
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffest)
+{
   camera.ProcessMouseScroll(static_cast<float>(yoffest));
 }
 unsigned int loadCubemap(vector<std::string> faces)
 {
-    unsigned int textureID;
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
+  unsigned int textureID;
+  glGenTextures(1, &textureID);
+  glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
-    int width, height, nrChannels;
-    for (unsigned int i = 0; i < faces.size(); i++)
+  int width, height, nrChannels;
+  for (unsigned int i = 0; i < faces.size(); i++)
+  {
+    unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
+    if (data)
     {
-        unsigned char *data = stbi_load(faces[i].c_str(), &width, &height, &nrChannels, 0);
-        if (data)
-        {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            stbi_image_free(data);
-        }
-        else
-        {
-            std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
-            stbi_image_free(data);
-        }
+      glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+      stbi_image_free(data);
     }
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    else
+    {
+      std::cout << "Cubemap texture failed to load at path: " << faces[i] << std::endl;
+      stbi_image_free(data);
+    }
+  }
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    return textureID;
+  return textureID;
 }
