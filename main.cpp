@@ -44,7 +44,7 @@ bool mouseEnabled = true;
 
 int main()
 {
-  // camera.setFPSCam();
+  camera.setFPSCam();
   // glfw: initialize and configure
   // ------------------------------
   glfwInit();

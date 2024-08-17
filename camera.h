@@ -31,6 +31,7 @@ public:
   glm::vec3 Up;
   glm::vec3 Right;
   glm::vec3 WorldUp;
+  glm::vec3 height;
   // euler angles
   float Yaw;
   float Pitch;
@@ -49,6 +50,7 @@ public:
     Yaw = yaw;
     Pitch = pitch;
     FPSCam = false;
+    height = glm::vec3(0.0, 0.0, 0.0);
     updateCameraVectors();
   }
   // constructor with scalars
@@ -58,6 +60,7 @@ public:
     WorldUp = glm::vec3(upX, upY, upZ);
     Yaw = yaw;
     Pitch = pitch;
+    height = glm::vec3(0.0, 0.0, 0.0);
     updateCameraVectors();
   }
   // return view matrix
@@ -78,12 +81,12 @@ public:
     if (direction == RIGHT)
       Position += Right * velocity;
     if (direction == UP)
-      Position += Up * velocity;
+      height += Up * velocity;
     if (direction == DOWN)
-      Position -= Up * velocity;
+      height -= Up * velocity;
     // fps cam
     if (FPSCam)
-      Position.y = 0.0f;
+      Position.y = height.y;
   }
   // process mouse
   void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true)
