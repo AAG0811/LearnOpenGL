@@ -124,6 +124,7 @@ int main()
   // -------------------
   // change model here
   Model ourModel("../assets/models/pistol/pistol.obj");
+  Model boxModel("../assets/models/box/box.obj");
   // plane to replace model
 
   // skybox
@@ -243,11 +244,11 @@ int main()
 
     // render loaded model
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+    // model = glm::translate(model, glm::vec3(0.0f, 0.0f, 1.0f));
+    // model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
     modelShader.setMat4("model", model);
-    ourModel.Draw(modelShader);
+    boxModel.Draw(modelShader);
     // draw skybox as last
     glDepthFunc(GL_LEQUAL); // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader.use();
