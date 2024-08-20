@@ -6,10 +6,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <imgui/imgui.h>
-#include <imgui/imgui_impl_glfw.h>
-#include <imgui/imgui_impl_opengl3.h>
-
 #include "camera.h"
 #include "shader.h"
 #include "model.h"
@@ -87,46 +83,17 @@ int main()
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_MULTISAMPLE);
   glEnable(GL_CULL_FACE);
-
-  // setup dearimgui
-  // -----------------------------
-  IMGUI_CHECKVERSION();
-  ImGui::CreateContext();
-  ImGuiIO &io = ImGui::GetIO();
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-
-  // imgui backend
-  ImGui_ImplGlfw_InitForOpenGL(window, true);
-  ImGui_ImplOpenGL3_Init();
   // build and compile our shader program
   // ------------------------------------
   // create skybox shader and render
   Shader skyboxShader("../shaders/skyboxShader.vs", "../shaders/skyboxShader.fs");
-  Shader modelShader("../shaders/vertShader.vs", "../shaders/fragShader.fs");
-
-  // shader variables
-  glm::vec3 dirLightDirection(-0.2f, -1.0f, -0.3f);
-  glm::vec3 dirLightAmbient(0.5f, 0.5f, 0.5f);
-  glm::vec3 dirLightDiffuse(0.8f, 0.8f, 0.8f);
-  glm::vec3 dirLightSpecular(0.5f, 0.5f, 0.5f);
-
-  glm::vec3 pointLightPosition(0.0f, 2.0f, 2.0f);
-  glm::vec3 pointLightAmbient(0.05f, 0.05f, 0.05f);
-  glm::vec3 pointLightDiffuse(01.8f, 01.8f, 010.8f);
-  glm::vec3 pointLightSpecular(1.0f, 1.0f, 1.0f);
-  float pointLightConstant = 1.0f;
-  float pointLightLinear = 0.09f;
-  float pointLightQuadratic = 0.032f;
-
-  float materialShininess = 64.0f;
+  Shader modelShader("../shaders/advanced.vs", "../shaders/advanced.fs");
 
   // load models
   // -------------------
   // change model here
-  Model ourModel("../assets/models/pistol/pistol.obj");
   Model boxModel("../assets/models/box/box.obj");
-  // plane to replace model
-
+  Model boxbModel("../assets/models/boxb/box.obj");
   // skybox
   float skyboxVertices[] = {
       // positions
@@ -225,22 +192,12 @@ int main()
     modelShader.use();
     modelShader.setMat4("projection", projection);
     modelShader.setMat4("view", view);
-    // light properties
-    // directional light
-    modelShader.setVec3("dirLight.direction", dirLightDirection);
-    modelShader.setVec3("dirLight.ambient", dirLightAmbient);
-    modelShader.setVec3("dirLight.diffuse", dirLightDiffuse);
-    modelShader.setVec3("dirLight.specular", dirLightSpecular);
-    // point light 1
-    modelShader.setVec3("pointLight.position", pointLightPosition);
-    modelShader.setVec3("pointLight.ambient", pointLightAmbient);
-    modelShader.setVec3("pointLight.diffuse", pointLightDiffuse);
-    modelShader.setVec3("pointLight.specular", pointLightSpecular);
-    modelShader.setFloat("pointLight.constant", pointLightConstant);
-    modelShader.setFloat("pointLight.linear", pointLightLinear);
-    modelShader.setFloat("pointLight.quadratic", pointLightQuadratic);
-    // material properties
-    modelShader.setFloat("material.shininess", materialShininess);
+    // set light uniforms
+    modelShader.setVec3("viewPos", camera.Position);
+    modelShader.setVec3("lightPos", lightPos);
+    modelShader.setInt("blinn", true);
+    // set material properties
+    modelShader.setFloat("material.shininess", 64.0f);
 
     // render loaded model
     glm::mat4 model = glm::mat4(1.0f);
@@ -248,7 +205,15 @@ int main()
     // model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     // model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
     modelShader.setMat4("model", model);
-    boxModel.Draw(modelShader);
+    // boxModel.Draw(modelShader);
+
+    // second box
+    model = glm::mat4(1.0f);
+    model = glm::translate(model, glm::vec3(0.0, -1.0, 0.0));
+    model = glm::scale(model, glm::vec3(2.0, 0.1, 2.0));
+    modelShader.setMat4("model", model);
+    boxbModel.Draw(modelShader);
+
     // draw skybox as last
     glDepthFunc(GL_LEQUAL); // change depth function so depth test passes when values are equal to depth buffer's content
     skyboxShader.use();
@@ -267,47 +232,11 @@ int main()
     // etc.)
     // -------------------------------------------------------------------------------
     glfwPollEvents();
-
-    // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-    // set window size and pos
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-    ImGui::SetNextWindowSize(ImVec2((float)(SCR_WIDTH * 0.45), (float)(SCR_WIDTH * 0.45)));
-    { // IMGUI Scene Window
-      ImGui::Begin("Scene Settings", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
-      ImGui::Text("Directional Light Settings");
-      ImGui::SliderFloat3("Direction", (float *)&dirLightDirection, -10, 10, "%.3f");
-      ImGui::SliderFloat3("Directional Ambient", (float *)&dirLightAmbient, 0, 10, "%.3f");
-      ImGui::SliderFloat3("Directional Diffuse", (float *)&dirLightDiffuse, 0, 10, "%.3f");
-      ImGui::SliderFloat3("Directional Specular", (float *)&dirLightSpecular, 0, 10, "%.3f");
-      ImGui::Text("Point Light Settings");
-      ImGui::SliderFloat3("Point Position", (float *)&pointLightPosition, -10, 10, "%.3f");
-      ImGui::SliderFloat3("Point Ambient", (float *)&pointLightAmbient, 0, 10, "%.3f");
-      ImGui::SliderFloat3("Point Diffuse", (float *)&pointLightDiffuse, 0, 10, "%.3f");
-      ImGui::SliderFloat3("Point Specular", (float *)&pointLightSpecular, 0, 10, "%.3f");
-      ImGui::SliderFloat("Point Constant", (float *)&pointLightConstant, 0, 10, "%.3f");
-      ImGui::SliderFloat("LPoint inear", (float *)&pointLightLinear, 0, 5, "%.3f");
-      ImGui::SliderFloat("Point Quadratic", (float *)&pointLightQuadratic, 0, 5, "%.4f");
-      ImGui::Text("Material Settings");
-      ImGui::SliderFloat("Material Shininess", (float *)&materialShininess, 0, 100, "%.2f");
-      if (ImGui::Button("Close Program"))
-        glfwSetWindowShouldClose(window, true);
-      ImGui::End();
-    }
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
     glfwSwapBuffers(window);
   }
   // deallocate resources
   glDeleteVertexArrays(1, &skyboxVAO);
   glDeleteBuffers(1, &skyboxVBO);
-  // shutdown imgui
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGlfw_Shutdown();
-  ImGui::DestroyContext();
   // glfw: terminate, clearing all previously allocated GLFW resources.
   // ------------------------------------------------------------------
   glfwTerminate();
@@ -321,17 +250,6 @@ void processInput(GLFWwindow *window)
 {
   if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-  {
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    mouseEnabled = false;
-  }
-  if (glfwGetKey(window, GLFW_KEY_TAB) == GLFW_PRESS)
-  {
-    firstMouse = true;
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    mouseEnabled = true;
-  }
 
   if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     camera.ProcessKeyboard(FORWARD, deltaTime);
