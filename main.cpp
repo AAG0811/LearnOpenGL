@@ -149,12 +149,12 @@ int main()
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
   // load textures
   vector<std::string> faces{
-      "../assets/skybox/right.jpg",
-      "../assets/skybox/left.jpg",
-      "../assets/skybox/top.jpg",
-      "../assets/skybox/bottom.jpg",
-      "../assets/skybox/front.jpg",
-      "../assets/skybox/back.jpg"};
+      "../assets/sunset/px.png",
+      "../assets/sunset/nx.png",
+      "../assets/sunset/py.png",
+      "../assets/sunset/ny.png",
+      "../assets/sunset/nz.png",
+      "../assets/sunset/pz.png"};
   unsigned int cubemapTexture = loadCubemap(faces);
 
   // shader configuration
