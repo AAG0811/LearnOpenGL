@@ -34,7 +34,9 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // light pos
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+glm::vec3 lightPos(0.0f, 0.5f, 0.0f);
+// light col
+glm::vec3 lightCol(1.5f);
 
 bool mouseEnabled = true;
 
@@ -83,6 +85,7 @@ int main()
   glEnable(GL_DEPTH_TEST);
   glEnable(GL_MULTISAMPLE);
   glEnable(GL_CULL_FACE);
+  glEnable(GL_FRAMEBUFFER_SRGB);
   // build and compile our shader program
   // ------------------------------------
   // create skybox shader and render
@@ -194,8 +197,9 @@ int main()
     modelShader.setMat4("view", view);
     // set light uniforms
     modelShader.setVec3("viewPos", camera.Position);
-    modelShader.setVec3("lightPos", lightPos);
-    modelShader.setInt("blinn", true);
+    modelShader.setVec3("lightPosition", lightPos);
+    modelShader.setVec3("lightColor", lightCol);
+    modelShader.setInt("gamma", true);
     // set material properties
     modelShader.setFloat("material.shininess", 64.0f);
 
