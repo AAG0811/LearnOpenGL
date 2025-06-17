@@ -1,4 +1,5 @@
 # Code Following **[LearnOpenGL](https://learnopengl.com)**
+There are different branches of this repo for different chapters of learnopengl.com
 ---
 A personal repository to store changes between different tutorial chapters following the tutorials.
 ![Wooden and Steel box with demonic symbol](/assets/ss/demonbox-ss.png)
